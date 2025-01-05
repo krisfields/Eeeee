@@ -44,7 +44,6 @@
             font-size: 1.2em;
             border-radius: 5px;
             line-height: 1.5em;
-            /* Removed background-color to preserve original styling */
             /* Additional styling can be added here if needed */
         }
         .play-button-play {
@@ -138,8 +137,8 @@
 
         /* Container Adjustment */
         .container {
-            max-width: 1200px; /* Increased max-width from 800px to 1200px */
-            margin: 20px auto; /* Reduced top margin to accommodate overlay */
+            max-width: 800px; /* Set max-width to 800px */
+            margin: 20px auto; /* Center the container */
             padding: 0 20px;
         }
 
@@ -151,6 +150,7 @@
             border: 1px solid #000000;
             border-radius: 5px;
             text-align: center;
+            /* Remove width constraints if inside container */
         }
 
         .game-section h2 {
@@ -158,13 +158,27 @@
             font-size: 1.8em;
         }
 
-        .game-section iframe {
+        /* Responsive Iframe Container */
+        .game-section .iframe-container {
+            position: relative;
             width: 100%;
-            max-width: 1000px; /* Increased max-width for a wider game display */
-            height: 600px;
-            border: none;
+            max-width: 1366px; /* Set to game width */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (768/1366 ≈ 0.5625) */
+            height: 0;
+            overflow: hidden;
             border-radius: 5px;
+            margin: 0 auto; /* Center the container */
         }
+
+        .game-section .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
 
         /* About Section Styles */
         .about {
@@ -220,9 +234,8 @@
         }
 
         @media (max-width: 1000px) {
-            .game-section iframe {
-                max-width: 100%;
-                height: 600px; /* Maintain height */
+            .game-section .iframe-container {
+                padding-bottom: 56.25%; /* Maintain aspect ratio */
             }
         }
 
@@ -251,8 +264,8 @@
                 font-size: 0.95em;
             }
 
-            .game-section iframe {
-                height: 400px; /* Adjust height for smaller screens */
+            .game-section .iframe-container {
+                padding-bottom: 56.25%; /* Maintain aspect ratio */
             }
         }
 
@@ -327,13 +340,16 @@
         </section>
     </header>
 
-    <div class="container">
+    <!-- Game Section (Placed Outside Container for Full Width) -->
+    <section class="game-section" id="gameSection">
+        <h2>Play the Game</h2>
+        <div class="iframe-container">
+            <iframe src="Egame/index.html" title="Game" loading="lazy"></iframe>
+        </div>
+    </section>
 
-        <!-- Game Section -->
-        <section class="game-section" id="gameSection">
-            <h2>Play the Game</h2>
-            <iframe src="Egame/index.html" title="Game"></iframe>
-        </section>
+    <!-- Other Sections Within Container -->
+    <div class="container">
 
         <!-- About Section -->
         <section class="about">
