@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Game Title</title>
+    <style>
+        /* Global Box-Sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Base Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Header Styles with Full-Height Background Image */
+        .header {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            background-image: url('Eeeee2.png'); /* Path to your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Play Now Button Styles */
+        .play-button {
+            position: absolute;
+            top: 49.5%; /* Slightly adjusted for better vertical alignment */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000000; /* Black text */
+            padding: 75px 60px; /* Original padding */
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            line-height: 1.5em;
+            /* Removed background-color to preserve original styling */
+            /* Additional styling can be added here if needed */
+        }
+        .play-button-play {
+            color: #ffffff; /* White text for "Play" */
+        }
+        .play-button-now {
+            padding-top: 10px;
+            /* Additional styling can be added here if needed */
+        }
+
+        /* Mailing List Overlay Styles */
+        .mailing-list-overlay {
+            position: absolute;
+            top: 75vh; /* Positioned at 75% of viewport height */
+            left: 50%;
+            transform: translateX(-50%);
+            /* Removed background-color for transparency */
+            color: #ffffff; /* White text */
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            /* Removed box-shadow for a cleaner look */
+            /* Optional: Add text shadow for better readability */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .mailing-list-overlay h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .mailing-list-overlay form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mailing-list-overlay input[type="email"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 10px;
+            border: 1px solid #ffffff; /* White border */
+            border-radius: 5px;
+            background-color: #ffffff; /* White background for input */
+            color: #000000; /* Black text in input */
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .mailing-list-overlay input[type="email"]::placeholder {
+            color: #666666; /* Darker placeholder for readability */
+        }
+
+        .mailing-list-overlay button {
+            padding: 10px 20px;
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            max-width: 400px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .mailing-list-overlay button:hover {
+            background-color: #f0f0f0; /* Light grey on hover */
+            color: #000000; /* Maintain black text */
+        }
+
+        /* Success Message Styles */
+        #ml-success-message {
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #ml-success-message h4 {
+            margin-bottom: 10px;
+        }
+        #ml-success-message p {
+            margin: 0;
+        }
+
+        /* Container Adjustment */
+        .container {
+            max-width: 1200px; /* Increased max-width from 800px to 1200px */
+            margin: 20px auto; /* Reduced top margin to accommodate overlay */
+            padding: 0 20px;
+        }
+
+        /* Game Section Styles */
+        .game-section {
+            margin-bottom: 50px;
+            padding: 20px;
+            background-color: #f1f1f1; /* Light background for contrast */
+            border: 1px solid #000000;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .game-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .game-section iframe {
+            width: 100%;
+            max-width: 1000px; /* Increased max-width for a wider game display */
+            height: 600px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* About Section Styles */
+        .about {
+            margin-bottom: 50px;
+            padding: 20px;
+            background-color: #f9f9f9; /* Light grey background for contrast */
+            border: 1px solid #000000;
+            border-radius: 5px;
+        }
+
+        .about h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .about p {
+            font-size: 1em;
+            line-height: 1.6em;
+            margin-bottom: 15px;
+            color: #333333;
+            text-align: justify;
+        }
+
+        /* Blog Entries Styles */
+        .blog {
+            margin-bottom: 50px;
+        }
+        .blog h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .blog-entry {
+            border-bottom: 1px solid #000000;
+            padding: 10px 0;
+        }
+        .blog-entry:last-child {
+            border-bottom: none;
+        }
+        .blog-entry h3 {
+            margin: 0 0 5px 0;
+        }
+        .blog-entry p {
+            margin: 0;
+            color: #555555;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .game-section iframe {
+                max-width: 100%;
+                height: 600px; /* Maintain height */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .play-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .mailing-list-overlay {
+                top: 80vh; /* Adjusted positioning for smaller screens */
+                padding: 15px;
+            }
+            .mailing-list-overlay input[type="email"],
+            .mailing-list-overlay button {
+                width: 100%;
+            }
+            .about {
+                padding: 15px;
+            }
+
+            .about h2 {
+                font-size: 1.5em;
+            }
+
+            .about p {
+                font-size: 0.95em;
+            }
+
+            .game-section iframe {
+                height: 400px; /* Adjust height for smaller screens */
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){
+            w[f]=w[f]||function(){
+                (w[f].q=w[f].q||[]).push(arguments);
+            };
+            l=d.createElement(e),
+            l.async=1,
+            l.src=u,
+            n=d.getElementsByTagName(e)[0],
+            n.parentNode.insertBefore(l,n);
+        })
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '1252452');
+    </script>
+    <!-- End MailerLite Universal -->
+</head>
+<body>
+
+    <!-- Header Section with Background Image and Overlayed Mailing List -->
+    <header class="header">
+        <!-- Play Now Button -->
+        <a href="#gameSection" class="play-button" id="playNowButton">
+            <span class="play-button-play">Play</span><br>
+            <span class="play-button-now">Now</span>
+        </a>
+        
+        <!-- Mailing List Signup Overlay -->
+        <section class="mailing-list-overlay" id="mailing-list">
+            <h2>Join My Mailing List</h2>
+            <!-- MailerLite Form -->
+            <form 
+                class="ml-block-form validate" 
+                action="https://assets.mailerlite.com/jsonp/1252452/forms/142121708023711144/subscribe" 
+                data-code="WQMdBg" 
+                method="post" 
+                novalidate>
+                
+                <!-- Email Input -->
+                <input 
+                    type="email" 
+                    name="fields[email]" 
+                    id="mce-EMAIL" 
+                    placeholder="Enter your email" 
+                    required 
+                    aria-label="Email Address" 
+                    autocomplete="email">
+                
+                <!-- Anti-Spam Hidden Field -->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input type="text" name="anticsrf" tabindex="-1" value="">
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" name="subscribe" id="ml-submit-button">Subscribe</button>
+            </form>
+
+            <!-- Success Message -->
+            <div id="ml-success-message" style="display: none; text-align: center; margin-top: 20px;">
+                <h4>Thank you!</h4>
+                <p>You have successfully joined my mailing list.</p>
+            </div>
+        </section>
+    </header>
+
+    <div class="container">
+
+        <!-- Game Section -->
+        <section class="game-section" id="gameSection">
+            <h2>Play the Game</h2>
+            <iframe src="Egame/index.html" title="Game"></iframe>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <h2>About This Game</h2>
+            <p>
+                This game was built as a special Christmas present for my 12-year-old son. As any parent knows, communicating with kids can be both delightful and, at times, a bit challenging. Half the time, when I ask him a question, the only response I get is a resounding "Eeeeeee!"
+            </p>
+            <p>
+                Inspired by these interactions, I wanted to create something that not only entertains but also symbolizes the bond between a parent and child. The idea of the game centers around two halves of yourself that must come together to form a complete whole. It's a metaphor for understanding, patience, and the joy of connecting with those we love most.
+            </p>
+            <p>
+                I hope this game brings as much joy and connection to others as it did to my family. Merry Christmas and happy gaming!
+            </p>
+        </section>
+
+        <!-- Blog Entries -->
+        <section class="blog">
+            <h2>Latest Blog Posts</h2>
+
+            <!-- Blog Entry 1 -->
+            <div class="blog-entry">
+                <h3>Blog Post Title 1</h3>
+                <p>Published on December 20, 2024</p>
+                <p>Brief summary or excerpt of your blog post...</p>
+            </div>
+
+            <!-- Blog Entry 2 -->
+            <div class="blog-entry">
+                <h3>Blog Post Title 2</h3>
+                <p>Published on December 10, 2024</p>
+                <p>Brief summary or excerpt of your blog post...</p>
+            </div>
+
+            <!-- Add more blog entries as needed -->
+
+        </section>
+
+    </div>
+
+    <script>
+        // Get references to the form and success message
+        const form = document.querySelector('.ml-block-form');
+        const successMessage = document.getElementById('ml-success-message');
+
+        // Listen for form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            // Send form data via Fetch API
+            fetch(form.action, {
+                method: form.method,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data.toString(),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Hide the form
+                    form.style.display = 'none';
+                    // Show the success message
+                    successMessage.style.display = 'block';
+                } else {
+                    // Handle errors here
+                    alert('There was an error submitting the form. Please try again.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('There was an error submitting the form. Please try again.');
+            });
+        });
+
+        // Smooth Scroll for Play Now Button
+        document.getElementById("playNowButton").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("gameSection").scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+
+</body>
+</html>
